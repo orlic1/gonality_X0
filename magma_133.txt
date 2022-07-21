@@ -1,0 +1,90 @@
+// This coes gives a lower bound of 7 on the Q-gonality of X0(133)
+
+load "new_models.m";
+SX:= eqs_quos(133,[]);
+D:=DefiningEquations(X);
+D2:=[];
+for i:=1 to #D do
+p:=D[i];
+l:=LCM([Denominator(a):a in Coefficients(p)]);
+p:=p*l;
+D2:=D2 cat [p];
+end for;
+C:=Scheme(ProjectiveSpace(Rationals(),Genus(X)-1),D2);
+C2:=ChangeRing(C,GF(3));
+FF := FunctionField(C2);
+AFF := AlgorithmicFunctionField(FF);
+pls1:=Places(AFF,1);
+pls2:=Places(AFF,2);
+pls3:=Places(AFF,3);
+pls4:=Places(AFF,4);
+#pls1,#pls2; // 6 34
+
+///// There exists a function with supporten on at most 2 F_3-rational points
+
+// 3+3
+s:={};
+s:=s  join {Dimension(RiemannRochSpace(p+q)): p in pls3, q in pls3};
+s;
+
+// 4+2
+s:={};
+s:=s  join {Dimension(RiemannRochSpace(p+q)): p in pls4, q in pls2};
+s;
+
+// 5+1
+s:={};
+s:=s  join {Dimension(RiemannRochSpace(p+q)): p in pls5, q in pls1};
+s;
+
+// 6
+s:={};
+s:=s  join {Dimension(RiemannRochSpace(p)): p in pls6};
+s;
+
+// 4+1+1
+s:={};
+s:=s  join {Dimension(RiemannRochSpace(p+q+u)): p in pls4, q,u in pls1};
+s;
+
+//3+2+1
+s:={};
+s:=s  join {Dimension(RiemannRochSpace(p+q+u)): p in pls3, q in pls1, u in pls2};
+s;
+
+//3+2+1
+s:={};
+s:=s  join {Dimension(RiemannRochSpace(p+q+u)): p,q,u in pls2};
+s;
+
+//2+2+1+1
+s:={};
+s:=s  join {Dimension(RiemannRochSpace(p+q+u+v)): p,q in pls2, u,v in pls1};
+s;
+
+
+//3+2*1+1
+s:={};
+s:=s  join {Dimension(RiemannRochSpace(p+q+q+u)): p in pls3, q,u in pls1};
+s;
+
+//2+2*1+2*1
+s:={};
+s:=s  join {Dimension(RiemannRochSpace(p+q+q+u+u)): p in pls2, q,u in pls1};
+s;
+
+//2+3*1+1
+s:={};
+s:=s  join {Dimension(RiemannRochSpace(p+q+q+q+u)): p in pls2, q,u in pls1};
+s;
+
+//3*1+3*1, 4*1+2*1, 5*1+1, 6*1
+s:={};
+s:=s  join {Dimension(RiemannRochSpace(p+p+p+q+q+q)): p,q in pls1};
+s:=s  join {Dimension(RiemannRochSpace(p+p+p+p+q+q)): p,q in pls1};
+s:=s  join {Dimension(RiemannRochSpace(p+p+p+p+p+q)): p,q in pls1};
+s:=s  join {Dimension(RiemannRochSpace(p+p+p+p+p+p)): p in pls1};
+s;
+
+
+/// Conclusion: no functions of degree 6 over F_3

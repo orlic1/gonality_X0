@@ -1,0 +1,4 @@
+// this file gives a plower bound for the Q-gonality of X_0(154)
+load "Fp_gonality.m";
+X:= eqs_quos(154,[]);
+fp_deg6_max1(X,5);

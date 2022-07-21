@@ -1,0 +1,23 @@
+// this code gives a lower bound on the gonality of X_0(113)
+load "new_models.m";
+X:= eqs_quos(115,[]);
+D:=DefiningEquations(X);
+D2:=[];
+for i:=1 to #D do
+p:=D[i];
+l:=LCM([Denominator(a):a in Coefficients(p)]);
+p:=p*l;
+D2:=D2 cat [p];
+end for;
+C:=Scheme(ProjectiveSpace(Rationals(),10),D2);
+C2:=ChangeRing(C,GF(3));
+FF := FunctionField(C2);
+AFF := AlgorithmicFunctionField(FF);
+div1:=Places(AFF,1);
+Max([Dimension(RiemannRochSpace(p+q+r+s+t)) : p,q,r,s,t in div1]);
+Max([Dimension(RiemannRochSpace(p+q+r+s)) : p,q,r in div1, s in Places(AFF,2)]);
+Max([Dimension(RiemannRochSpace(p+q+r)) : p in div1, q,r in Places(AFF,2)]);
+Max([Dimension(RiemannRochSpace(p+q+r)) : p,q in div1, r in Places(AFF,3)]);
+Max([Dimension(RiemannRochSpace(p+q)) : p in Places(AFF,2), q in Places(AFF,3)]);
+Max([Dimension(RiemannRochSpace(p+q)) : p in div1, q in Places(AFF,4)]);
+Max([Dimension(RiemannRochSpace(p)) : p in Places(AFF,5)]);

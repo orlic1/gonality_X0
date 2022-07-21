@@ -1,0 +1,5 @@
+// this code proves that X_0(54) is trigonal
+X:=eqs_quos(54,[[54]]);
+pts:=PointSearch(X,20);
+plcs:=[Place(p): p in pts];
+assert Maximum([Dimension(RiemannRochSpace(p+q+r)):p,q,r in plcs]) eq 2;

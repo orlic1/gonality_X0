@@ -1,0 +1,125 @@
+// this file gives a plower bound for the Q-gonality of X_0(114)
+
+load "new_models.m";
+X:= eqs_quos(114,[]);
+D:=DefiningEquations(X);
+D2:=[];
+for i:=1 to #D do
+p:=D[i];
+l:=LCM([Denominator(a):a in Coefficients(p)]);
+p:=p*l;
+D2:=D2 cat [p];
+end for;
+C:=Scheme(ProjectiveSpace(Rationals(),Genus(X)-1),D2);
+C2:=ChangeRing(C,GF(5));
+FF := FunctionField(C2);
+AFF := AlgorithmicFunctionField(FF);
+pls1:=Places(AFF,1);
+pls2:=Places(AFF,2);
+#pls1,#pls2; // 8 44
+
+// thus there exists an element of P^1(F_5) with preimage at least 2
+
+// 1+1+1+1+1+1+1
+s:={};
+for i:=1 to #pls1 do
+for j:=i to #pls1 do
+for k:=j to #pls1 do
+for l:=k to #pls1 do
+for m:=l to #pls1 do
+for n:=m to #pls1 do
+for o:=n to #pls1 do
+s:=s  join {Dimension(RiemannRochSpace(pls1[i]+pls1[j]+pls1[k]+pls1[l]+pls1[m]+pls1[n]+pls1[o]))};
+end for;
+end for;
+end for;
+end for;
+end for;
+end for;
+end for;
+s;
+
+// 1+1+1+1+1+2
+s:={};
+for i:=1 to #pls1 do
+for j:=i to #pls1 do
+for k:=j to #pls1 do
+for l:=k to #pls1 do
+for m:=l to #pls1 do
+for n:=1 to #pls2 do
+s:=s  join {Dimension(RiemannRochSpace(pls1[i]+pls1[j]+pls1[k]+pls1[l]+pls1[m]+pls2[n]))};
+end for;
+end for;
+end for;
+end for;
+end for;
+end for;
+s;
+
+// 1+1+1+2+2
+s:={};
+for i:=1 to #pls1 do
+for j:=i to #pls1 do
+for k:=j to #pls1 do
+for l:=1 to #pls2 do
+for m:=l to #pls2 do
+s:=s  join {Dimension(RiemannRochSpace(pls1[i]+pls1[j]+pls1[k]+pls2[l]+pls2[m]))};
+end for;
+end for;
+end for;
+end for;
+end for;
+s;
+
+// 1+1+1+1+3
+s:={};
+for i:=1 to #pls1 do
+for j:=i to #pls1 do
+for k:=j to #pls1 do
+for l:=k to #pls1 do
+for m:=1 to #Places(AFF,3) do
+s:=s  join {Dimension(RiemannRochSpace(pls1[i]+pls1[j]+pls1[k]+pls1[l]+Places(AFF,3)[m]))};
+end for;
+end for;
+end for;
+end for;
+end for;
+s;
+
+// 1+1+1+4
+s:={};
+for i:=1 to #pls1 do
+for j:=i to #pls1 do
+for k:=j to #pls1 do
+for l:=1 to #Places(AFF,4) do
+s:=s  join {Dimension(RiemannRochSpace(pls1[i]+pls1[j]+pls1[k]+Places(AFF,4)[l]))};
+end for;
+end for;
+end for;
+end for;
+s;
+
+
+// 1+1+2+3
+s:={};
+for i:=1 to #pls1 do
+for j:=i to #pls1 do
+for k:=1 to #pls2 do
+for l:=1 to #Places(AFF,3) do
+s:=s  join {Dimension(RiemannRochSpace(pls1[i]+pls1[j]+pls2[k]+Places(AFF,3)[l]))};
+end for;
+end for;
+end for;
+end for;
+s;
+
+// 1+1+5
+s:={};
+for i:=1 to #pls1 do
+for j:=i to #pls1 do
+for k:=1 to #Places(AFF,5) do
+s:=s  join {Dimension(RiemannRochSpace(pls1[i]+pls1[j]+Places(AFF,5)[k]))};
+end for;
+end for;
+end for;
+s;
