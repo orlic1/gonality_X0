@@ -1,4 +1,4 @@
-// this code gives a lower bound on the gonality of X_0(196)
+// this code gives a lower bound on the gonality of X_0(200)
 load "new_models.m";
 X:= eqs_quos(200,[]);
 D:=DefiningEquations(X);
