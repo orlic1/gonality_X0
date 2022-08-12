@@ -1,0 +1,149 @@
+// this code shows that X0(97) does not have gonality 5 over Q, as explained in section 5 of the paper 
+
+load "new_models.m";
+W5:= function(p)
+X1,w,pairs:= eqs_quos(97,[[97]]);
+X:=ChangeRing(X1,GF(p));
+assert Genus(X) eq 7;
+K<[x]>:=CoordinateRing(X);
+w:= iso<X -> X | [x[1],x[2],x[3],-x[4],-x[5],-x[6],-x[7]],[x[1],x[2],x[3],-x[4],-x[5],-x[6],-x[7]]>;
+P1:=X![-1 ,0 , 0 , 1 , 0 , 0 , 0];
+P2:=X![1 ,0 , 0 , 1 , 0 , 0 , 0];
+D0:=Place(P1)-Place(P2);
+D:=[i*D0: i in [1..8]];
+pls1:=Places(X,1);
+pls2:=Places(X,2);
+pls3:=Places(X,3);
+pls4:=Places(X,4);
+pls5:=Places(X,5);
+
+// 5
+S:={};
+S1:={1};
+for p in pls5 do 
+	if Dimension(RiemannRochSpace(Divisor(p))) gt 1 then 
+		S1:=S1 join {2};
+		a:=p-Place(w(RepresentativePoint(p)));
+		for i:= 1 to 8 do 
+		if IsPrincipal(D[i]-a) then S:=S join {i}; end if;
+		end for;
+	end if;
+end for;
+
+
+// 4+1
+
+S1:={1};
+for p in pls1 do
+	for q in pls4 do 
+		if Dimension(RiemannRochSpace(Divisor(p)+Divisor(q))) gt 1 then 
+			S1:=S1 join {2};
+			a:=p+q-Place(w(RepresentativePoint(p)))-Place(w(RepresentativePoint(q)));
+			for i:= 1 to 8 do 
+				if IsPrincipal(D[i]-a) then S:=S join {i}; end if;
+			end for;
+		end if;
+	end for;
+end for;
+
+
+// 3+2
+
+S1:={1};
+for p in pls2 do
+	for q in pls3 do 
+		if Dimension(RiemannRochSpace(Divisor(p)+Divisor(q))) gt 1 then 
+			S1:=S1 join {2};
+			a:=p+q-Place(w(RepresentativePoint(p)))-Place(w(RepresentativePoint(q)));
+			for i:= 1 to 8 do 
+				if IsPrincipal(D[i]-a) then S:=S join {i}; end if;
+			end for;
+		end if;
+	end for;
+end for;
+
+//3+1+1
+
+
+S1:={1};
+for p in pls3 do
+	for q in pls1 do
+		for u in pls1 do
+			if Dimension(RiemannRochSpace(Divisor(p)+Divisor(q)+Divisor(u))) gt 1 then 
+				S1:=S1 join {2};
+			a:=p+q+u-Place(w(RepresentativePoint(p)))-Place(w(RepresentativePoint(q)))-Place(w(RepresentativePoint(u)));
+				for i:= 1 to 8 do 
+					if IsPrincipal(D[i]-a) then S:=S join {i}; end if;
+				end for;
+			end if;
+		end for;
+	end for;
+end for;
+
+// 2+2+1
+
+
+S1:={1};
+for p in pls2 do
+	for q in pls2 do
+		for u in pls1 do
+			if Dimension(RiemannRochSpace(Divisor(p)+Divisor(q)+Divisor(u))) gt 1 then 
+				S1:=S1 join {2};
+			a:=p+q+u-Place(w(RepresentativePoint(p)))-Place(w(RepresentativePoint(q)))-Place(w(RepresentativePoint(u)));
+				for i:= 1 to 8 do 
+					if IsPrincipal(D[i]-a) then S:=S join {i}; end if;
+				end for;
+			end if;
+		end for;
+	end for;
+end for;
+
+
+// 2+1+1+1
+
+
+S1:={1};
+for p in pls2 do
+	for q in pls1 do
+		for u in pls1 do
+		for v in pls1 do
+			if Dimension(RiemannRochSpace(Divisor(p)+Divisor(q)+Divisor(u)+Divisor(v))) gt 1 then 
+				S1:=S1 join {2};
+			a:=p+q+u+v-Place(w(RepresentativePoint(p)))-Place(w(RepresentativePoint(q)))-Place(w(RepresentativePoint(u)))- Place(w(RepresentativePoint(v)));
+				for i:= 1 to 8 do 
+					if IsPrincipal(D[i]-a) then S:=S join {i}; end if;
+				end for;
+			end if;
+		end for;
+	end for;
+end for;
+end for;
+
+
+// 1+1+1+1+1
+
+
+S1:={1};
+for p in pls1 do
+	for q in pls1 do
+		for u in pls1 do
+		for v in pls1 do
+		for z in pls1 do
+			if Dimension(RiemannRochSpace(Divisor(p)+Divisor(q)+Divisor(u)+Divisor(v)+Divisor(z))) gt 1 then 
+				S1:=S1 join {2};
+			a:=p+q+u+v+z-Place(w(RepresentativePoint(p)))-Place(w(RepresentativePoint(q)))-Place(w(RepresentativePoint(u)))- Place(w(RepresentativePoint(v)))- Place(w(RepresentativePoint(z)));
+				for i:= 1 to 8 do 
+					if IsPrincipal(D[i]-a) then S:=S join {i}; end if;
+				end for;
+			end if;
+		end for;
+	end for;
+end for;
+end for;
+end for;
+
+return S;
+end function;
+IsEmpty(W5(3) meet W5(5));
+//alternatively: IsEmpty(W5(7));
+

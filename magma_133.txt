@@ -1,90 +1,318 @@
-// This coes gives a lower bound of 7 on the Q-gonality of X0(133)
+// this file proves that the gonality of X0(133) is not <=7 as explained in Section 5 of the paper
+
 
 load "new_models.m";
-SX:= eqs_quos(133,[]);
-D:=DefiningEquations(X);
-D2:=[];
-for i:=1 to #D do
-p:=D[i];
-l:=LCM([Denominator(a):a in Coefficients(p)]);
-p:=p*l;
-D2:=D2 cat [p];
+//W5:= function(p)
+X1,w,pairs,c,C1:= eqs_quos(133,[[133]]);
+X:=ChangeRing(X1,GF(3));
+assert Genus(X) eq 11;
+K<[x]>:=CoordinateRing(X);
+w:= iso<X -> X | [x[1],x[2],x[3],x[4],x[5],x[6],-x[7],-x[8],-x[9],-x[10],-x[11]],[x[1],x[2],x[3],x[4],x[5],x[6],-x[7],-x[8],-x[9],-x[10],-x[11]]>;
+
+P1:=X![1,0,1,0,0,0,1,0,1,0,0];
+P2:=X![-1,0,-1,0,0,0,1,0,1,0,0];
+P3:=X![-1,0,1,0,0,0,-1,0,1,0,0];
+P4:=X![1,0,-1,0,0,0,-1,0,1,0,0];
+D0:=Place(P1)-Place(P2);//|D0|=90
+D1:=Place(P4)-Place(P2);//|D1|=36
+D2:=Place(P3)-Place(P2);//|D2|=60
+A:=D1+D0; 
+B:=10*D2+45*D0; 
+assert IsPrincipal(180*A); assert (IsPrincipal(90*A) eq false); assert (IsPrincipal(60*A) eq false); assert (IsPrincipal(36*A) eq false); //|A|=180
+assert IsPrincipal(6*B); assert (IsPrincipal(3*B) eq false); assert (IsPrincipal(2*B) eq false); //|B|=6
+assert (IsPrincipal(3*B-90*A) eq false); assert (IsPrincipal(2*B-60*A) eq false); assert (IsPrincipal(2*B-120*A) eq false); // so <A,B>=Z/6xZ/180
+//A and B generate a subgroup 6 x 180 such that any element of 2J_0(N)^- is contained in it.
+
+
+D:=[];
+for j:=1 to 6 do D[j]:=[i*A+j*B: i in [1..180]]; end for;
+//for j:=1 to 6 do for i:=1 to 180 do if IsPrincipal(D[j][i]-A) then i,j; end if;end for; end for; //doublecheck
+pls1:=Places(X,1);
+pls2:=Places(X,2);
+pls3:=Places(X,3);
+pls4:=Places(X,4);
+pls5:=Places(X,5);
+pls6:=Places(X,6);
+pls7:=Places(X,7);
+
+// 7
+S:={};
+
+for p in pls7 do 
+	if Dimension(RiemannRochSpace(Divisor(p))) gt 1 then 
+		
+		a:=p-Place(w(RepresentativePoint(p)));
+		for i:= 1 to 180 do
+			for j:=1 to 6 do 
+				if IsPrincipal(D[j][i]-2*a) then S:=S join {(i,j)}; end if;
+			end for;
+		end for;
+	end if;
 end for;
-C:=Scheme(ProjectiveSpace(Rationals(),Genus(X)-1),D2);
-C2:=ChangeRing(C,GF(3));
-FF := FunctionField(C2);
-AFF := AlgorithmicFunctionField(FF);
-pls1:=Places(AFF,1);
-pls2:=Places(AFF,2);
-pls3:=Places(AFF,3);
-pls4:=Places(AFF,4);
-#pls1,#pls2; // 6 34
-
-///// There exists a function with supporten on at most 2 F_3-rational points
-
-// 3+3
-s:={};
-s:=s  join {Dimension(RiemannRochSpace(p+q)): p in pls3, q in pls3};
-s;
-
-// 4+2
-s:={};
-s:=s  join {Dimension(RiemannRochSpace(p+q)): p in pls4, q in pls2};
-s;
-
-// 5+1
-s:={};
-s:=s  join {Dimension(RiemannRochSpace(p+q)): p in pls5, q in pls1};
-s;
-
-// 6
-s:={};
-s:=s  join {Dimension(RiemannRochSpace(p)): p in pls6};
-s;
-
-// 4+1+1
-s:={};
-s:=s  join {Dimension(RiemannRochSpace(p+q+u)): p in pls4, q,u in pls1};
-s;
-
-//3+2+1
-s:={};
-s:=s  join {Dimension(RiemannRochSpace(p+q+u)): p in pls3, q in pls1, u in pls2};
-s;
-
-//3+2+1
-s:={};
-s:=s  join {Dimension(RiemannRochSpace(p+q+u)): p,q,u in pls2};
-s;
-
-//2+2+1+1
-s:={};
-s:=s  join {Dimension(RiemannRochSpace(p+q+u+v)): p,q in pls2, u,v in pls1};
-s;
 
 
-//3+2*1+1
-s:={};
-s:=s  join {Dimension(RiemannRochSpace(p+q+q+u)): p in pls3, q,u in pls1};
-s;
-
-//2+2*1+2*1
-s:={};
-s:=s  join {Dimension(RiemannRochSpace(p+q+q+u+u)): p in pls2, q,u in pls1};
-s;
-
-//2+3*1+1
-s:={};
-s:=s  join {Dimension(RiemannRochSpace(p+q+q+q+u)): p in pls2, q,u in pls1};
-s;
-
-//3*1+3*1, 4*1+2*1, 5*1+1, 6*1
-s:={};
-s:=s  join {Dimension(RiemannRochSpace(p+p+p+q+q+q)): p,q in pls1};
-s:=s  join {Dimension(RiemannRochSpace(p+p+p+p+q+q)): p,q in pls1};
-s:=s  join {Dimension(RiemannRochSpace(p+p+p+p+p+q)): p,q in pls1};
-s:=s  join {Dimension(RiemannRochSpace(p+p+p+p+p+p)): p in pls1};
-s;
+// 6+1
 
 
-/// Conclusion: no functions of degree 6 over F_3
+for p in pls1 do
+	for q in pls6 do 
+		if Dimension(RiemannRochSpace(Divisor(p)+Divisor(q))) gt 1 then 
+			
+		a:=p-Place(w(RepresentativePoint(p)));
+		for i:= 1 to 180 do
+			for j:=1 to 6 do 
+				if IsPrincipal(D[j][i]-2*a) then S:=S join {(i,j)}; end if;
+			end for;
+		end for;
+		end if;
+	end for;
+end for;
+
+
+// 5+2
+
+
+for p in pls2 do
+	for q in pls5 do 
+		if Dimension(RiemannRochSpace(Divisor(p)+Divisor(q))) gt 1 then 
+			
+		a:=p-Place(w(RepresentativePoint(p)));
+		for i:= 1 to 180 do
+			for j:=1 to 6 do 
+				if IsPrincipal(D[j][i]-2*a) then S:=S join {(i,j)}; end if;
+			end for;
+		end for;
+		end if;
+	end for;
+end for;
+
+
+// 4+3
+
+
+for p in pls3 do
+	for q in pls4 do 
+		if Dimension(RiemannRochSpace(Divisor(p)+Divisor(q))) gt 1 then 
+			
+		a:=p-Place(w(RepresentativePoint(p)));
+		for i:= 1 to 180 do
+			for j:=1 to 6 do 
+				if IsPrincipal(D[j][i]-2*a) then S:=S join {(i,j)}; end if;
+			end for;
+		end for;
+		end if;
+	end for;
+end for;
+
+//5+1+1
+
+
+
+for p in pls5 do
+	for q in pls1 do
+		for u in pls1 do
+			if Dimension(RiemannRochSpace(Divisor(p)+Divisor(q)+Divisor(u))) gt 1 then 
+				
+			a:=p+q+u-Place(w(RepresentativePoint(p)))-Place(w(RepresentativePoint(q)))-Place(w(RepresentativePoint(u)));
+				for i:= 1 to 180 do
+			for j:=1 to 6 do 
+				if IsPrincipal(D[j][i]-2*a) then S:=S join {(i,j)}; end if;
+			end for;
+		end for;
+			end if;
+		end for;
+	end for;
+end for;
+
+// 4+2+1
+
+
+
+for p in pls4 do
+	for q in pls2 do
+		for u in pls1 do
+			if Dimension(RiemannRochSpace(Divisor(p)+Divisor(q)+Divisor(u))) gt 1 then 
+				
+			a:=p+q+u-Place(w(RepresentativePoint(p)))-Place(w(RepresentativePoint(q)))-Place(w(RepresentativePoint(u)));
+				for i:= 1 to 180 do
+			for j:=1 to 6 do 
+				if IsPrincipal(D[j][i]-2*a) then S:=S join {(i,j)}; end if;
+			end for;
+		end for;
+			end if;
+		end for;
+	end for;
+end for;
+
+
+// 3+3+1
+
+
+
+for p in pls3 do
+	for q in pls3 do
+		for u in pls1 do
+			if Dimension(RiemannRochSpace(Divisor(p)+Divisor(q)+Divisor(u))) gt 1 then 
+				
+			a:=p+q+u-Place(w(RepresentativePoint(p)))-Place(w(RepresentativePoint(q)))-Place(w(RepresentativePoint(u)));
+				for i:= 1 to 180 do
+			for j:=1 to 6 do 
+				if IsPrincipal(D[j][i]-2*a) then S:=S join {(i,j)}; end if;
+			end for;
+		end for;
+			end if;
+		end for;
+	end for;
+end for;
+
+
+
+// 3+2+1+1
+
+
+
+for p in pls3 do
+	for q in pls2 do
+		for u in pls1 do
+		for v in pls1 do
+			if Dimension(RiemannRochSpace(Divisor(p)+Divisor(q)+Divisor(u)+Divisor(v))) gt 1 then 
+				
+			a:=p+q+u+v-Place(w(RepresentativePoint(p)))-Place(w(RepresentativePoint(q)))-Place(w(RepresentativePoint(u)))- Place(w(RepresentativePoint(v)));
+				for i:= 1 to 180 do
+			for j:=1 to 6 do 
+				if IsPrincipal(D[j][i]-2*a) then S:=S join {(i,j)}; end if;
+			end for;
+		end for;
+			end if;
+		end for;
+	end for;
+end for;
+end for;
+
+
+// 4+1+2*1
+
+
+
+for p in pls4 do
+	for q in pls1 do
+		for u in pls1 do
+			if Dimension(RiemannRochSpace(Divisor(p)+Divisor(q)+2*Divisor(u))) gt 1 then 
+				
+			a:=p+q+2*u-Place(w(RepresentativePoint(p)))-Place(w(RepresentativePoint(q)))-Place(2*w(RepresentativePoint(u)));
+				for i:= 1 to 180 do
+			for j:=1 to 6 do 
+				if IsPrincipal(D[j][i]-2*a) then S:=S join {(i,j)}; end if;
+			end for;
+		end for;
+			end if;
+		end for;
+	end for;
+end for;
+
+
+// 3+1+3*1
+
+
+
+for p in pls3 do
+	for q in pls1 do
+		for u in pls1 do
+			if Dimension(RiemannRochSpace(Divisor(p)+Divisor(q)+3*Divisor(u))) gt 1 then 
+				
+			a:=p+q+3*u-Place(w(RepresentativePoint(p)))-Place(w(RepresentativePoint(q)))-3*Place(w(RepresentativePoint(u)));
+				for i:= 1 to 180 do
+			for j:=1 to 6 do 
+				if IsPrincipal(D[j][i]-2*a) then S:=S join {(i,j)}; end if;
+			end for;
+		end for;
+			end if;
+		end for;
+	end for;
+end for;
+S;
+
+// 3+2*1+2*1
+
+
+
+for p in pls3 do
+	for q in pls1 do
+		for u in pls1 do
+			if Dimension(RiemannRochSpace(Divisor(p)+2*Divisor(q)+2*Divisor(u))) gt 1 then 
+				
+			a:=p+2*q+2*u-Place(w(RepresentativePoint(p)))-2*Place(w(RepresentativePoint(q)))-2*Place(w(RepresentativePoint(u)));
+				for i:= 1 to 180 do
+			for j:=1 to 6 do 
+				if IsPrincipal(D[j][i]-2*a) then S:=S join {(i,j)}; end if;
+			end for;
+		end for;
+			end if;
+		end for;
+	end for;
+end for;
+
+
+// 2+1+4*1
+
+
+
+for p in pls2 do
+	for q in pls1 do
+		for u in pls1 do
+			if Dimension(RiemannRochSpace(Divisor(p)+Divisor(q)+4*Divisor(u))) gt 1 then 
+				
+			a:=p+q+4*u-Place(w(RepresentativePoint(p)))-Place(w(RepresentativePoint(q)))-4*Place(w(RepresentativePoint(u)));
+				for i:= 1 to 180 do
+			for j:=1 to 6 do 
+				if IsPrincipal(D[j][i]-2*a) then S:=S join {(i,j)}; end if;
+			end for;
+		end for;
+			end if;
+		end for;
+	end for;
+end for;
+
+// 2+2*1+3*1
+
+
+
+for p in pls2 do
+	for q in pls1 do
+		for u in pls1 do
+			if Dimension(RiemannRochSpace(Divisor(p)+2*Divisor(q)+3*Divisor(u))) gt 1 then 
+				
+			a:=p+2*q+3*u-Place(w(RepresentativePoint(p)))-2*Place(w(RepresentativePoint(q)))-3*Place(w(RepresentativePoint(u)));
+				for i:= 1 to 180 do
+			for j:=1 to 6 do 
+				if IsPrincipal(D[j][i]-2*a) then S:=S join {(i,j)}; end if;
+			end for;
+		end for;
+			end if;
+		end for;
+	end for;
+end for;
+
+//
+for k:=0 to 3 do
+for p in pls1 do
+	for q in pls1 do
+		if Dimension(RiemannRochSpace(k*Divisor(p)+(7-k)*Divisor(q))) gt 1 then 
+				
+			a:=k*p+(7-k)*q-k*Place(w(RepresentativePoint(p)))-(7-k)*Place(w(RepresentativePoint(q)));
+				for i:= 1 to 180 do
+			for j:=1 to 6 do 
+				if IsPrincipal(D[j][i]-2*a) then S:=S join {(i,j)}; end if;
+			end for;
+		end for;
+		end if;
+		
+	end for;
+end for;
+end for;
+
+
+IsEmpty(S);
+
+
+
