@@ -167,6 +167,30 @@ end for;
 
 
 
+// 2+2+2+1
+
+
+
+for p in pls2 do
+	for q in pls2 do
+		for u in pls2 do
+		for v in pls1 do
+			if Dimension(RiemannRochSpace(Divisor(p)+Divisor(q)+Divisor(u)+Divisor(v))) gt 1 then 
+				
+			a:=p+q+u+v-Place(w(RepresentativePoint(p)))-Place(w(RepresentativePoint(q)))-Place(w(RepresentativePoint(u)))- Place(w(RepresentativePoint(v)));
+				for i:= 1 to 180 do
+			for j:=1 to 6 do 
+				if IsPrincipal(D[j][i]-2*a) then S:=S join {[i,j]}; end if;
+			end for;
+		end for;
+			end if;
+		end for;
+	end for;
+end for;
+end for;
+
+
+
 // 3+2+1+1
 
 
@@ -313,6 +337,4 @@ end for;
 
 
 IsEmpty(S);
-
-
 
