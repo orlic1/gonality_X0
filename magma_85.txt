@@ -1,0 +1,27 @@
+load "new_models.m";
+X,ws,pairs:= eqs_quos(85,[[5,17]]);
+Xw:=pairs[1,1];
+f:=pairs[1,2];
+ptsXw:=RationalPoints(Xw:Bound:=200);
+#ptsXw;
+pb:=[Pullback(f,Place(p)):p in ptsXw];
+pls1:={}; pls2:={}; pls4:={}; pls3:={};
+for i:=1 to #pb do
+dec:=Decomposition(pb[i]);
+for j:=1 to #dec do	
+	if Degree(dec[j,1]) eq 1 then pls1:=pls1 join {dec[j,1]};end if;
+	if Degree(dec[j,1]) eq 2 then pls2:=pls2 join {dec[j,1]};end if;
+	if Degree(dec[j,1]) eq 3 then pls3:=pls3 join {dec[j,1]};end if;
+	if Degree(dec[j,1]) eq 4 then pls4:=pls4 join {dec[j,1]};end if;
+end for;
+end for;
+[Degree(P): P in pls1];
+[Degree(P): P in pls2];
+[Degree(P): P in pls3];
+[Degree(P): P in pls4];
+//Max([Dimension(RiemannRochSpace(p+q+r+s+t)) : p,q,r,s,t in pls1]);
+// returns 1
+//Max([Dimension(RiemannRochSpace(p+q+r+s)) : p,q,r in pls1, s in pls2]);
+// returns 2
+Max([Dimension(RiemannRochSpace(q+s)) : q,s in pls2]);
+// returns 2, proving that there exists a modular function of degree 4
