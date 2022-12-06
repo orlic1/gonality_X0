@@ -20,6 +20,5 @@ Max([Dimension(RiemannRochSpace(p+q+r+s)) : p,q,r in div1, s in Places(AFF,2)]);
 Max([Dimension(RiemannRochSpace(p+q+r)) : p in div1, q,r in Places(AFF,2)]);
 Max([Dimension(RiemannRochSpace(p+q+r)) : p,q in div1, r in Places(AFF,3)]);
 Max([Dimension(RiemannRochSpace(p+q)) : p in Places(AFF,2), q in Places(AFF,3)]);
-Max([Dimension(RiemannRochSpace(p+q)) : p in div1, q in Places(AFF,4)]);
+//Max([Dimension(RiemannRochSpace(p+q)) : p in div1, q in Places(AFF,4)]); there are no degree 4 places
 Max([Dimension(RiemannRochSpace(p)) : p in Places(AFF,5)]);
-
