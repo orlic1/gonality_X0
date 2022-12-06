@@ -1,0 +1,5 @@
+load "Fp_gonality.m";
+load "new_models.m";
+load "assorted_functions.m";
+X:= eqs_quos(152,[]);
+fp_deg8_max2(X,3);
