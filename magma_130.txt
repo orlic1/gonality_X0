@@ -17,12 +17,46 @@ pls1:=Places(AFF,1);
 pls2:=Places(AFF,2);
 #pls1,#pls2;
 pls3:=Places(AFF,3);
+pls4:=Places(AFF,4);
+pls5:=Places(AFF,5);
+pls7:=Places(AFF,7);
 
+//4+3
+s:={};
+for p in CartesianProduct(pls3,pls4) do
+s:=s  join {Dimension(RiemannRochSpace(p[1]+p[2]))};
+end for;
+s;
+//returns 1;
+
+//5+2
+s:={};
+for p in CartesianProduct(pls2,pls5) do
+s:=s  join {Dimension(RiemannRochSpace(p[1]+p[2]))};
+end for;
+s;
+//returns 1;
+
+//3+2+2
+s:={};
+for p in CartesianProduct([pls2,pls3,pls3]) do
+s:=s  join {Dimension(RiemannRochSpace(p[1]+p[2]+p[3]))};
+end for;
+s;
+//returns 1;
+
+//7
+s:={};
+for p in pls7 do
+s:=s  join {Dimension(RiemannRochSpace(p))};
+end for;
+s;
+//returns 1;
 
 //7*1
 s:={};
 for i:=1 to #pls1 do
-i;
+
 s;
 s:=s  join {Dimension(RiemannRochSpace(7*pls1[i]))};
 end for;
@@ -32,7 +66,7 @@ s;
 //5*1+2
 s:={};
 for i:=1 to #pls1 do
-i;
+
 s;
 for k:=1 to #pls2 do
 s:=s  join {Dimension(RiemannRochSpace(5*pls1[i]+pls2[k]))};
@@ -44,7 +78,7 @@ s;
 //4*1+3
 s:={};
 for i:=1 to #pls1 do
-i;
+
 s;
 for k:=1 to #pls3 do
 s:=s  join {Dimension(RiemannRochSpace(4*pls1[i]+pls3[k]))};
@@ -58,7 +92,7 @@ s;
 //1+3+3
 s:={};
 for i:=1 to #pls1 do
-i;
+
 s;
 for k:=1 to #pls3 do
 for j:=1 to #pls3 do
@@ -74,7 +108,7 @@ s;
 pls4:=Places(AFF,4);
 s:={};
 for i:=1 to #pls1 do
-i;
+
 s;
 for k:=1 to #pls2 do
 for j:=1 to #pls4 do
@@ -90,7 +124,7 @@ s;
 
 s:={};
 for i:=1 to #pls1 do
-i;
+
 s;
 for k:=1 to #pls2 do
 for j:=1 to #pls3 do
@@ -105,7 +139,7 @@ s;
 
 s:={};
 for i:=1 to #pls1 do
-i;
+
 s;
 for k:=1 to #pls2 do
 for j:=1 to #pls2 do
@@ -120,7 +154,7 @@ s;
 //1 +2+2+2
 s:={};
 for i:=1 to #pls1 do
-i;
+
 s;
 for k:=1 to #pls2 do
 for j:=k to #pls2 do
@@ -139,7 +173,7 @@ s;
 pls6:=Places(AFF,6);
 s:={};
 for i:=1 to #pls1 do
-i;
+
 s;
 for p in pls6 do
 s:=s  join {Dimension(RiemannRochSpace(pls1[i]+p))};
@@ -153,7 +187,7 @@ s;
 pls5:=Places(AFF,5);
 s:={};
 for i:=1 to #pls1 do
-i;
+
 s;
 for p in pls5 do
 s:=s  join {Dimension(RiemannRochSpace(2*pls1[i]+p))};
@@ -180,7 +214,6 @@ s;
 P:=pls1[1];
 
 s:={};
-i;
 s;
 for k:=1 to #pls1 do
 k;
@@ -200,7 +233,6 @@ s;
 
 P:=pls1[1];
 s:={};
-i;
 s;
 for k:=1 to #pls1 do
 k;
@@ -218,7 +250,6 @@ s;
 
 P:=pls1[1];
 s:={};
-i;
 s;
 for k:=1 to #pls1 do
 k;
@@ -236,7 +267,6 @@ s;
 
 P:=pls1[1];
 s:={};
-i;
 s;
 for k:=1 to #pls1 do
 k;
@@ -253,7 +283,6 @@ s;
 
 P:=pls1[1];
 s:={};
-i;
 s;
 for k:=1 to #pls1 do
 k;
@@ -269,7 +298,6 @@ s;
 //4*1+3*1
 P:=pls1[1];
 s:={};
-i;
 s;
 for k:=1 to #pls1 do
 k;
@@ -283,7 +311,6 @@ s;
 //5*1+2*1
 P:=pls1[1];
 s:={};
-i;
 s;
 for k:=1 to #pls1 do
 k;
@@ -298,7 +325,6 @@ s;
 //4*1+3*1
 P:=pls1[1];
 s:={};
-i;
 s;
 for k:=1 to #pls1 do
 k;
@@ -312,7 +338,6 @@ s;
 //2*1+5*1
 P:=pls1[1];
 s:={};
-i;
 s;
 for k:=1 to #pls1 do
 k;
@@ -326,7 +351,7 @@ s;
 //3*1+4*1
 P:=pls1[1];
 s:={};
-i;
+
 s;
 for k:=1 to #pls1 do
 k;
@@ -339,7 +364,7 @@ s;
 //6*1+1*1
 P:=pls1[1];
 s:={};
-i;
+
 s;
 for k:=1 to #pls1 do
 k;
@@ -352,7 +377,7 @@ s;
 //1*1+6*1
 P:=pls1[1];
 s:={};
-i;
+
 s;
 for k:=1 to #pls1 do
 k;
@@ -365,7 +390,7 @@ s;
 //1*1+1*1+5
 P:=pls1[1];
 s:={};
-i;
+
 s;
 for k:=1 to #pls1 do
 k;
@@ -380,7 +405,7 @@ s;
 //1*1+1*1+3+2
 P:=pls1[1];
 s:={};
-i;
+
 s;
 for k:=1 to #pls1 do
 k;
@@ -398,7 +423,7 @@ s;
 pls4:=Places(AFF,4);
 P:=pls1[1];
 s:={};
-i;
+
 s;
 for k:=1 to #pls1 do
 k;
@@ -414,7 +439,7 @@ s;
 pls4:=Places(AFF,4);
 P:=pls1[1];
 s:={};
-i;
+
 s;
 for k:=1 to #pls1 do
 k;
