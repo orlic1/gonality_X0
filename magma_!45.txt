@@ -1,0 +1,237 @@
+// this file proves that the gonality of X0(145) is not <=6
+
+
+load "new_models.m";
+//W5:= function(p)
+X1,w,pairs,c,C1:= eqs_quos(145,[[145]]);
+X:=ChangeRing(X1,GF(3));
+assert Genus(X) eq 13;
+K<[x]>:=CoordinateRing(X);
+w:= iso<X -> X | [x[1],-x[2],-x[3],-x[4],-x[5],-x[6],-x[7],-x[8],-x[9],x[10],x[11],x[12],x[13]],[x[1],-x[2],-x[3],-x[4],-x[5],-x[6],-x[7],-x[8],-x[9],x[10],x[11],x[12],x[13]]>;
+
+P1:=X![1,1,0,0,0,0,1,0,0,1,0,0,0];
+P2:=X![1,-1,0,0,0,0,-1,0,0,1,0,0,0];
+P3:=X![1,1,0,0,0,0,-1,0,0,-1,0,0,0];
+P4:=X![1,-1,0,0,0,0,1,0,0,-1,0,0,0];
+D0:=Place(P1)-Place(P2);
+D1:=Place(P4)-Place(P2);
+D2:=Place(P3)-Place(P2);
+A:=D1;
+B:=5*D0;
+
+assert IsPrincipal(140*A); assert (IsPrincipal(70*A) eq false); assert (IsPrincipal(20*A) eq false); assert (IsPrincipal(28*A) eq false); //|A|=140
+assert IsPrincipal(14*B); assert (IsPrincipal(7*B) eq false); assert (IsPrincipal(2*B) eq false); //|B|=14
+assert (IsPrincipal(7*B-70*A) eq false); assert (IsPrincipal(2*B-20*A) eq false); assert (IsPrincipal(2*B-40*A) eq false); assert (IsPrincipal(2*B-60*A) eq false); assert (IsPrincipal(2*B-80*A) eq false); assert (IsPrincipal(2*B-100*A) eq false); assert (IsPrincipal(2*B-120*A) eq false); // so <A,B>=Z/14xZ/140
+
+D:=[];
+for j:=1 to 14 do D[j]:=[i*A+j*B: i in [1..140]]; end for;
+pls1:=Places(X,1);
+pls2:=Places(X,2);
+pls3:=Places(X,3);
+pls4:=Places(X,4);
+pls5:=Places(X,5);
+pls6:=Places(X,6);
+
+#pls1,#pls2; // 4 20
+
+// thus there exists an element of P^1(F_3) with preimage of at most 1 F_3-element
+
+// 6
+S:={};
+
+for p in pls6 do 
+	if Dimension(RiemannRochSpace(Divisor(p))) gt 1 then 
+		
+		a:=p-Place(w(RepresentativePoint(p)));
+		for i:= 1 to 140 do
+			for j:=1 to 14 do 
+				if IsPrincipal(D[j][i]-2*a) then S:=S join {[i,j]}; end if;
+			end for;
+		end for;
+	end if;
+end for;
+
+S;
+
+
+// 5+1
+
+
+for p in pls1 do
+	for q in pls5 do 
+		if Dimension(RiemannRochSpace(Divisor(p)+Divisor(q))) gt 1 then 
+			
+		a:=p+q-Place(w(RepresentativePoint(p)))-Place(w(RepresentativePoint(q)));
+		for i:= 1 to 140 do
+			for j:=1 to 14 do 
+				if IsPrincipal(D[j][i]-2*a) then S:=S join {[i,j]}; end if;
+			end for;
+		end for;
+		end if;
+	end for;
+end for;
+
+S;
+
+
+// 4+2
+
+
+for p in pls2 do
+	for q in pls4 do 
+		if Dimension(RiemannRochSpace(Divisor(p)+Divisor(q))) gt 1 then 
+			
+		a:=p+q-Place(w(RepresentativePoint(p)))-Place(w(RepresentativePoint(q)));
+		for i:= 1 to 140 do
+			for j:=1 to 14 do 
+				if IsPrincipal(D[j][i]-2*a) then S:=S join {[i,j]}; end if;
+			end for;
+		end for;
+		end if;
+	end for;
+end for;
+
+S;
+
+
+// 3+3
+
+
+for p in pls3 do
+	for q in pls3 do 
+		if Dimension(RiemannRochSpace(Divisor(p)+Divisor(q))) gt 1 then 
+			
+		a:=p+q-Place(w(RepresentativePoint(p)))-Place(w(RepresentativePoint(q)));
+		for i:= 1 to 140 do
+			for j:=1 to 14 do 
+				if IsPrincipal(D[j][i]-2*a) then S:=S join {[i,j]}; end if;
+			end for;
+		end for;
+		end if;
+	end for;
+end for;
+
+S;
+
+//4+2*1
+
+
+
+for p in pls4 do
+	for q in pls1 do
+		if Dimension(RiemannRochSpace(Divisor(p)+2*Divisor(q))) gt 1 then 
+			
+		a:=p+2*q-Place(w(RepresentativePoint(p)))-Place(2*w(RepresentativePoint(q)));
+			for i:= 1 to 140 do
+				for j:=1 to 14 do 
+				if IsPrincipal(D[j][i]-2*a) then S:=S join {[i,j]}; end if;
+			end for;
+		end for;
+		end if;
+	end for;
+end for;
+
+S;
+
+// 3+2+1
+
+
+
+for p in pls3 do
+	for q in pls2 do
+		for u in pls1 do
+			if Dimension(RiemannRochSpace(Divisor(p)+Divisor(q)+Divisor(u))) gt 1 then 
+				
+			a:=p+q+u-Place(w(RepresentativePoint(p)))-Place(w(RepresentativePoint(q)))-Place(w(RepresentativePoint(u)));
+				for i:= 1 to 140 do
+			for j:=1 to 14 do 
+				if IsPrincipal(D[j][i]-2*a) then S:=S join {[i,j]}; end if;
+			end for;
+		end for;
+			end if;
+		end for;
+	end for;
+end for;
+
+S;
+
+
+// 2+2+2*1
+
+
+
+for p in pls2 do
+	for q in pls2 do
+		for u in pls1 do
+			if Dimension(RiemannRochSpace(Divisor(p)+Divisor(q)+2*Divisor(u))) gt 1 then 
+			
+			a:=p+q+2*u-Place(w(RepresentativePoint(p)))-Place(w(RepresentativePoint(q)))-Place(2*w(RepresentativePoint(u)));
+				for i:= 1 to 140 do
+			for j:=1 to 14 do 
+				if IsPrincipal(D[j][i]-2*a) then S:=S join {[i,j]}; end if;
+			end for;
+		end for;
+			end if;
+		end for;
+	end for;
+end for;
+
+S;
+
+// 3+3*1
+
+
+
+for p in pls3 do
+		for q in pls1 do
+			if Dimension(RiemannRochSpace(Divisor(p)+3*Divisor(q))) gt 1 then 
+				
+			a:=p+3*q-Place(w(RepresentativePoint(p)))-Place(3*w(RepresentativePoint(q)));
+				for i:= 1 to 140 do
+			for j:=1 to 14 do 
+				if IsPrincipal(D[j][i]-2*a) then S:=S join {[i,j]}; end if;
+			end for;
+		end for;
+			end if;
+	end for;
+end for;
+
+S;
+
+// 2+4*1
+
+
+
+for p in pls2 do
+		for q in pls1 do
+			if Dimension(RiemannRochSpace(Divisor(p)+4*Divisor(q))) gt 1 then 
+				
+			a:=p+4*q-Place(w(RepresentativePoint(p)))-Place(4*w(RepresentativePoint(q)));
+				for i:= 1 to 140 do
+			for j:=1 to 14 do 
+				if IsPrincipal(D[j][i]-2*a) then S:=S join {[i,j]}; end if;
+			end for;
+		end for;
+			end if;
+	end for;
+end for;
+
+S;
+
+// 6*1
+
+
+
+for p in pls1 do
+			if Dimension(RiemannRochSpace(6*Divisor(p))) gt 1 then 
+				
+			a:=6*p-Place(6*w(RepresentativePoint(p)));
+				for i:= 1 to 140 do
+			for j:=1 to 14 do 
+				if IsPrincipal(D[j][i]-2*a) then S:=S join {[i,j]}; end if;
+			end for;
+		end for;
+			end if;
+end for;
+
+S;
