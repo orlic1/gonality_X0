@@ -1,4 +1,5 @@
-// this code gives a lower bound on the gonality of X_0(157)
+load "Fp_gonality.m";
 load "new_models.m";
+load "assorted_functions.m";
 X:= eqs_quos(157,[]);
 fp_deg8_max1(X,3);
