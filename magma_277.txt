@@ -1,0 +1,7 @@
+// running time: 6 days and 17 hours
+
+load "Fp_gonality.m";
+load "new_models.m";
+load "assorted_functions.m";
+X:= eqs_quos(277,[]);
+fp_deg8_max1(X,5);

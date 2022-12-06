@@ -1,0 +1,5 @@
+// running time: 4 hours
+
+load "Fp_gonality.m";
+X:=X0NQuotient(201,[]);
+fp_deg8_max2(X,2);
