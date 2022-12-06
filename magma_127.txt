@@ -1,4 +1,4 @@
-// this code gives a lower bound on the gonality of X_0(127)
+// this code gives a lower bound on the Q-gonality of X_0(127)
 load "new_models.m";
 X:= eqs_quos(127,[]);
 D:=DefiningEquations(X);
@@ -21,3 +21,22 @@ Max([Dimension(RiemannRochSpace(p+q+r)) : p,q in div1, r in Places(AFF,3)]);
 Max([Dimension(RiemannRochSpace(p+q)) : p in Places(AFF,2), q in Places(AFF,3)]);
 Max([Dimension(RiemannRochSpace(p+q)) : p in div1, q in Places(AFF,4)]);
 Max([Dimension(RiemannRochSpace(p)) : p in Places(AFF,5)]);
+
+//this part of the code now proves that the C-gonality is 6
+
+load "new_models.m";
+X:=eqs_quos(127,[]);
+A:=QuotientModule(DefiningIdeal(X));
+BettiTable(A);
+BettiNumber(A,2,4);
+BettiNumber(A,3,5);
+
+//returns after 1.5 hours:
+//[
+//    [ 1, 0, 0, 0, 0, 0, 0, 0, 0 ],
+//    [ 0, 28, 105, 162, 84, 0, 0, 0, 0 ],
+//    [ 0, 0, 0, 0, 84, 162, 105, 28, 0 ],
+//    [ 0, 0, 0, 0, 0, 0, 0, 0, 1 ]
+//]
+//0
+//0
