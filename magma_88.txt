@@ -1,0 +1,19 @@
+load "new_models.m";
+X,ws,pairs:= eqs_quos(88,[[88]]);
+Xw:=pairs[1,1];
+f:=pairs[1,2];
+ptsXw:=PointSearch(Xw,1);
+pb:=[Pullback(f,p):p in ptsXw];
+
+pts:=[];
+for i in pb do pts:=pts cat [i]; end for;
+pts2:=[Points(p): p in pb];
+pts3:=[];
+for i:=1 to #pts2 do 
+if #pts2[i] ge 1 then
+for j:=1 to #pts2[i] do pts3:=pts3 cat [pts2[i,j]]; end for;
+end if;
+end for;
+pts4:=[Place(X!p): p in pts3];
+assert Maximum([Dimension(RiemannRochSpace(p+q+r+s)):p,q,r,s in pts4]) eq 2;
+//this proves the existence of a degree 4 map over Q.
