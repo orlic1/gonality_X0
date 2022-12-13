@@ -1,0 +1,56 @@
+load "new_models.m";
+load "assorted_functions.m";
+X:= eqs_quos(173,[]);
+D:=DefiningEquations(X);
+D2:=[];
+for i:=1 to #D do
+p:=D[i];
+l:=LCM([Denominator(a):a in Coefficients(p)]);
+p:=p*l;
+D2:=D2 cat [p];
+end for;
+C:=Scheme(ProjectiveSpace(Rationals(),Genus(X)-1),D2);
+C2:=ChangeRing(C,GF(3));
+FF := FunctionField(C2);
+AFF := AlgorithmicFunctionField(FF);
+pls1:=Places(AFF,1);
+pls2:=Places(AFF,2);
+#pls1,#pls2; // 2 17
+
+// thus there exists an element of P^1(F_3) with empty preimage, we check only the divisors of degree 7 because there are no rational functions of degree <=6
+
+// 2+2+3
+s:={};
+for i:=1 to #pls2 do
+for j:=i to #pls2 do
+for k:=1 to #Places(AFF,3) do
+s:=s  join {Dimension(RiemannRochSpace(pls2[i]+pls2[j]+Places(AFF,3)[k]))};
+end for;
+end for;
+end for;
+s;
+
+// 2+5
+s:={};
+for i:=1 to #pls2 do
+for k:=1 to #Places(AFF,5) do
+s:=s  join {Dimension(RiemannRochSpace(pls2[i]+Places(AFF,5)[k]))};
+end for;
+end for;
+s;
+
+// 3+4
+s:={};
+for i:=1 to #Places(AFF,3) do
+for j:=1 to #Places(AFF,4) do
+s:=s  join {Dimension(RiemannRochSpace(Places(AFF,3)[i]+Places(AFF,4)[j]))};
+end for;
+end for;
+s;
+
+// 7
+s:={};
+for i:=1 to #Places(AFF,7) do
+s:=s  join {Dimension(RiemannRochSpace(Places(AFF,7)[i]))};
+end for;
+s;
