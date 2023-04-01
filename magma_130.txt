@@ -21,6 +21,8 @@ pls4:=Places(AFF,4);
 pls5:=Places(AFF,5);
 pls7:=Places(AFF,7);
 
+//first we assume that there is a function with max 1 point
+
 //4+3
 s:={};
 for p in CartesianProduct(pls3,pls4) do
@@ -39,7 +41,7 @@ s;
 
 //3+2+2
 s:={};
-for p in CartesianProduct([pls2,pls3,pls3]) do
+for p in CartesianProduct([pls2,pls2,pls3]) do
 s:=s  join {Dimension(RiemannRochSpace(p[1]+p[2]+p[3]))};
 end for;
 s;
@@ -88,14 +90,13 @@ s;
 //returns 1;
 
 
-//prvo pretpostavimo da ima 1 funkcija s 1 točkom
 //1+3+3
 s:={};
 for i:=1 to #pls1 do
 
 s;
 for k:=1 to #pls3 do
-for j:=1 to #pls3 do
+for j:=k to #pls3 do
 s:=s  join {Dimension(RiemannRochSpace(pls1[i]+pls3[k]+pls3[j]))};
 end for;
 end for;
@@ -142,7 +143,7 @@ for i:=1 to #pls1 do
 
 s;
 for k:=1 to #pls2 do
-for j:=1 to #pls2 do
+for j:=k to #pls2 do
 s:=s  join {Dimension(RiemannRochSpace(3*pls1[i]+pls2[k]+pls2[j]))};
 end for;
 end for;
@@ -151,7 +152,7 @@ s;
 //returns 1;
 
 
-//1 +2+2+2
+//1+2+2+2
 s:={};
 for i:=1 to #pls1 do
 
@@ -205,7 +206,7 @@ end for;
 s;
 //returns 1;
 
-//////////////// 1 point - finshed
+//////////////// 1 point - finished
 
 //suppose 2 pts, 1 is pls1[1]
 
@@ -322,19 +323,6 @@ s;
 //returns 1;
 
 
-//4*1+3*1
-P:=pls1[1];
-s:={};
-s;
-for k:=1 to #pls1 do
-k;
-s;
-
-s:=s  join {Dimension(RiemannRochSpace(4*P+3*pls1[k]))};
-end for;
-s;
-//returns 1;
-
 //2*1+5*1
 P:=pls1[1];
 s:={};
@@ -342,7 +330,7 @@ s;
 for k:=1 to #pls1 do
 k;
 s;
-s:=s  join {Dimension(RiemannRochSpace(2*P+1*pls1[k]))};
+s:=s  join {Dimension(RiemannRochSpace(2*P+5*pls1[k]))};
 end for;
 s;
 //returns 1;
@@ -419,7 +407,7 @@ end for;
 s;
 //returns 1;
 
-//2*1+1*1+4+2
+//2*1+1*1+4
 pls4:=Places(AFF,4);
 P:=pls1[1];
 s:={};
@@ -435,7 +423,7 @@ end for;
 s;
 //returns 1;
 
-//1*1+*1+4+2
+//1*1+2*1+4
 pls4:=Places(AFF,4);
 P:=pls1[1];
 s:={};
@@ -445,7 +433,7 @@ for k:=1 to #pls1 do
 k;
 s;
 for p in pls4 do
-s:=s  join {Dimension(RiemannRochSpace(2*P+1*pls1[k]+p))};
+s:=s  join {Dimension(RiemannRochSpace(1*P+2*pls1[k]+p))};
 end for;
 end for;
 s;
