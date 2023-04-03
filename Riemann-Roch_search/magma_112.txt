@@ -1,0 +1,41 @@
+////this file computes the Q-gonality of X_0(112)
+//we first check that the lower bound for the gonality is 6.
+
+load "Fp_gonality.m";
+X:= eqs_quos(112,[]);
+assert fp_deg6_max2(X,3);
+
+
+
+// now we will explicitly find a function of degree 6. this takes a very long time to terminate, but a function is found after 10 hours (which can be seen as s becomes {1,2}
+load "new_models.m";
+X,ws,pairs:= eqs_quos(112,[[7]]);
+Xw:=pairs[1,1];
+f:=pairs[1,2];
+ptsXw:=PointSearch(Xw,200);
+#ptsXw;
+pb:=[Pullback(f,p):p in ptsXw];
+pls1:={};
+for i:=1 to 4 do
+i;
+	pls1:=pls1 join {Place(X!Points(pb[i])[1]), Place(X!Points(pb[i])[2])};
+end for;
+pls1:=SetToSequence(pls1);
+//Max([Dimension(RiemannRochSpace(p+q+r+s+t+u)) : p,q,r,s,t,u in pls1]);
+s:={};
+for i:=1 to #pls1 do 
+for j:=i to #pls1 do
+for k:=j to #pls1 do
+k;
+s;
+for l:=k to #pls1 do
+for m:=j to #pls1 do
+for n:=m to #pls1 do
+s:=s  join {Dimension(RiemannRochSpace(pls1[i]+pls1[j]+pls1[k]+pls1[m]+pls1[l]+pls1[n]))};
+end for;
+end for;
+end for;
+end for;
+end for;
+end for;
+assert #s ge 2;
