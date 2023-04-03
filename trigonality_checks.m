@@ -1,14 +1,14 @@
-// This file proves (parts of )Propostitions 4.8., 4.14 and 4.17 checking whether certain quotients of X_0(N) are trigonal over Q or not. 
+// This file proves (parts of )Propostitions 5.8, 5.2 and 5.16 checking whether certain quotients of X_0(N) are trigonal over Q or not. 
 load "new_models.m";
 
-//Now we prove Proposition 4.8 by checking that the trigonal maps are defined over Q 
+//Now we prove Proposition 5.8 by checking that the trigonal maps are defined over Q 
 X, ws, pairs:=eqs_quos(135,[[135]]);
 Genus4GonalMap(pairs[1,1]);
 X:=ModularCurveQuotient(215,[215]);
 Genus4GonalMap(X);
 
 
-//Now we prove Proposition 4.14 by explicitly constructing degree 3 functions 
+//Now we prove Proposition 5.2 by explicitly constructing degree 3 functions 
 
 X, ws, pairs:=eqs_quos(84,[[84]]);
 Xw:=pairs[1,1];
@@ -66,7 +66,7 @@ plcs:=[Place(p): p in pts];
 assert Maximum([Dimension(RiemannRochSpace(p+q+r)):p,q,r in plcs]) eq 2;
 // this proves that X_0^+(159) is trigonal over Q
 
-// Now we prove Propostion 4.17, by showing that quotients of X_0(N) are not trigonal by showing that there are no degree 3 functions over F_p, where p is a prime of good reduction.
+// Now we prove Propostion 5.16, by showing that quotients of X_0(N) are not trigonal by showing that there are no degree 3 functions over F_p, where p is a prime of good reduction.
 
 X, ws, pairs:=eqs_quos(110,[[55]]);
 Xw:=pairs[1,1];
