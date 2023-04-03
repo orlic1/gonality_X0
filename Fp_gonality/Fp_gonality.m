@@ -72,6 +72,11 @@ s:=s  join {Dimension(RiemannRochSpace(p+p+p+q))};
 end for;
 end for;
 
+//5*1
+for p in pls1 do 
+s:=s  join {Dimension(RiemannRochSpace(p+p+p+p+p))};
+end for;
+
 if #s eq 1 then return true; else return false; end if;
 end function;
 
@@ -495,6 +500,11 @@ for p in pls1 do
 for q in pls3 do 
 s:=s  join {Dimension(RiemannRochSpace(p+p+p+p+p+q))};
 end for;
+end for;
+
+//7*1
+for p in pls1 do 
+s:=s  join {Dimension(RiemannRochSpace(p+p+p+p+p+p+p))};
 end for;
 
 
