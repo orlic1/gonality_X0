@@ -86,7 +86,7 @@ s;
 s:={};
 P:=pls1[1];
 pls3:=Places(AFF,3);
-for p in pls3 do s:= s join{Dimension(RiemannRochSpace(2*p+P))};
+for p in pls3 do s:= s join{Dimension(RiemannRochSpace(p+2*P))};
 end for;
 s;
 //returns 1;
@@ -95,7 +95,7 @@ s;
 // 3*P+D_2
 s:={};
 P:=pls1[1];
-for p in pls2 do s:= s join{Dimension(RiemannRochSpace(3*p+P))};
+for p in pls2 do s:= s join{Dimension(RiemannRochSpace(p+2*P))};
 end for;
 s;
 //returns 1;
