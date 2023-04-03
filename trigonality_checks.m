@@ -228,3 +228,47 @@ Max({Dimension(RiemannRochSpace(p)):p in Places(AFF,3)});
 Max({Dimension(RiemannRochSpace(p+q)):p in pls1, q in pls2});
 Max({Dimension(RiemannRochSpace(p+q+u)):p,q,u in pls1});
 //returns 1 in all cases, proving that the quotient is not trigonal 
+
+Xw:=X0NQuotient(251,[[251]]);
+D:=DefiningEquations(Xw);
+D2:=[];
+for i:=1 to #D do
+p:=D[i];
+l:=LCM([Denominator(a):a in Coefficients(p)]);
+p:=p*l;
+D2:=D2 cat [p];
+end for;
+C:=Scheme(ProjectiveSpace(Rationals(),Genus(Xw)-1),D2);
+C2:=ChangeRing(C,GF(3));
+FF := FunctionField(C2);
+AFF := AlgorithmicFunctionField(FF);
+pls1:=Places(AFF,1);
+pls2:=Places(AFF,2);
+#pls1,#pls2;
+pls:=Places(AFF,3);
+Max({Dimension(RiemannRochSpace(p)):p in Places(AFF,3)});
+Max({Dimension(RiemannRochSpace(p+q)):p in pls1, q in pls2});
+Max({Dimension(RiemannRochSpace(p+q+u)):p,q,u in pls1});
+//returns 1 in all cases, proving that the quotient is not trigonal 
+
+Xw:=X0NQuotient(311,[[311]]);
+D:=DefiningEquations(Xw);
+D2:=[];
+for i:=1 to #D do
+p:=D[i];
+l:=LCM([Denominator(a):a in Coefficients(p)]);
+p:=p*l;
+D2:=D2 cat [p];
+end for;
+C:=Scheme(ProjectiveSpace(Rationals(),Genus(Xw)-1),D2);
+C2:=ChangeRing(C,GF(5));
+FF := FunctionField(C2);
+AFF := AlgorithmicFunctionField(FF);
+pls1:=Places(AFF,1);
+pls2:=Places(AFF,2);
+#pls1,#pls2;
+pls:=Places(AFF,3);
+Max({Dimension(RiemannRochSpace(p)):p in Places(AFF,3)});
+Max({Dimension(RiemannRochSpace(p+q)):p in pls1, q in pls2});
+Max({Dimension(RiemannRochSpace(p+q+u)):p,q,u in pls1});
+//returns 1 in all cases, proving that the quotient is not trigonal 
