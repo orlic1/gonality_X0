@@ -1,0 +1,40 @@
+// the first pard of the code gives a lower bound on the Q-gonality of X_0(86)
+
+load "new_models.m";
+X:= eqs_quos(86,[]);
+D:=DefiningEquations(X);
+D2:=[];
+for i:=1 to #D do
+p:=D[i];
+l:=LCM([Denominator(a):a in Coefficients(p)]);
+p:=p*l;
+D2:=D2 cat [p];
+end for;
+C:=Scheme(ProjectiveSpace(Rationals(),Genus(X)-1),D2);
+C2:=ChangeRing(C,GF(3));
+FF := FunctionField(C2);
+AFF := AlgorithmicFunctionField(FF);
+div1:=Places(AFF,1);
+Max([Dimension(RiemannRochSpace(p+q+r+s+t)) : p,q,r,s,t in div1]);
+Max([Dimension(RiemannRochSpace(p+q+r+s)) : p,q,r in div1, s in Places(AFF,2)]);
+Max([Dimension(RiemannRochSpace(p+q+r)) : p in div1, q,r in Places(AFF,2)]);
+Max([Dimension(RiemannRochSpace(p+q+r)) : p,q in div1, r in Places(AFF,3)]);
+Max([Dimension(RiemannRochSpace(p+q)) : p in  div1, q in Places(AFF,4)]);
+Max([Dimension(RiemannRochSpace(p)) : p in Places(AFF,5)]);
+
+
+//Now we show that the C-gonality is at least 6.
+
+X:=eqs_quos(86,[]);
+A:=QuotientModule(DefiningIdeal(X));
+BettiNumber(A,2,4);
+BettiNumber(A,3,5);
+BettiTable(A);
+
+//returns after about 3.5 hours:
+//[
+//    [ 1, 0, 0, 0, 0, 0, 0, 0, 0 ],
+//    [ 0, 28, 105, 162, 84, 0, 0, 0, 0 ],
+//    [ 0, 0, 0, 0, 84, 162, 105, 28, 0 ],
+//    [ 0, 0, 0, 0, 0, 0, 0, 0, 1 ]
+//]
