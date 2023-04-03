@@ -1,0 +1,4 @@
+// this code gives a lower bound on the gonality of X_0(90)
+load "Fp_gonality.m";
+X:= eqs_quos(90,[]);
+fp_deg6_max2(X,7);
