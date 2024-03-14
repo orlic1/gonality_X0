@@ -77,7 +77,7 @@ for p in pls1 do
 s:=s  join {Dimension(RiemannRochSpace(p+p+p+p+p))};
 end for;
 
-if #s eq 1 then return true; else return false; end if;
+if s eq { 1 } then return true; else return false; end if;
 end function;
 
 
@@ -182,7 +182,7 @@ s:=s join {Dimension(RiemannRochSpace(p+p+p+p+q))};
 end for;
 end for;
 
-if #s eq 1 then return true; else return false; end if;
+if s eq { 1 } then return true; else return false; end if;
 end function;
 
 
@@ -242,7 +242,7 @@ end for;
 
 
 
-if #s eq 1 then return true; else return false; end if;
+if s eq { 1 } then return true; else return false; end if;
 end function;
 
 
@@ -267,7 +267,7 @@ s:={};
 s:=s join{Max([Dimension(RiemannRochSpace(p+q+r)) : p,q,r in div1])};
 s:=s join{Max([Dimension(RiemannRochSpace(p+q)) : p in div1, q in Places(AFF,2)])};
 s:=s join{Max([Dimension(RiemannRochSpace(p)) : p in Places(AFF,3)])};
-if #s eq 1 then return true; else return false; end if;
+if s eq { 1 } then return true; else return false; end if;
 end function;
 
 
@@ -508,7 +508,7 @@ s:=s  join {Dimension(RiemannRochSpace(p+p+p+p+p+p+p))};
 end for;
 
 
-if #s eq 1 then return true; else return false; end if;
+if s eq { 1 } then return true; else return false; end if;
 end function;
 
 function fp_deg8_max2(X, q)
